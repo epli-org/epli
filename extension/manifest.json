@@ -1,0 +1,11 @@
+{
+  "name": "Arxiv Helper",
+  "description": "Make fancy papers easy to understand",
+  "version": "0.0.1",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [ "scripting", "tabs" ],
+  "host_permissions": [ "https://www.arxiv-vanity.com/*" ]
+}
