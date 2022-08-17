@@ -38,6 +38,8 @@ def get_arxiv_abstract(txt_file_path):
                 abstract += line.strip() + ' '
     return abstract
 
+def get_explanation_prompt(abstract):
+    return f"Explain '{abstract}' like I am five years old."
 
 @app.route("/main_paper_information")
 def main_paper_info():
@@ -93,7 +95,7 @@ def main_paper_info():
     openai.api_key = "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"
     response = openai.Completion.create(
         model="text-davinci-002", 
-        prompt="Explain '" + abstract + "' like I am five years old.", 
+        prompt=get_explanation_prompt(abstract), 
         temperature=1,
         max_tokens=10
     )
