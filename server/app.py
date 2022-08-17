@@ -5,14 +5,6 @@ import os
 import openai
 
 
-
-# txt_file_path = r"papers/attention.txt"
-# file=open(txt_file_path,"a")
-# for x in range(0, number_of_pages):
-#   page = reader.pages[x]
-#   text = page.extract_text()
-#   file.writelines(text)
-
 app = Flask(__name__)
 
 @app.route("/")
@@ -47,8 +39,8 @@ def get_arxiv_abstract(txt_file_path):
     return abstract
 
 
-@app.route("/main_paper_information/<arxiv_id>")
-def main_paper_info(arxiv_id):
+@app.route("/main_paper_information")
+def main_paper_info():
     """Returns a json object with the following format:
     {
         abstract:<paper_abstract>
@@ -58,18 +50,22 @@ def main_paper_info(arxiv_id):
 
     Assumes that the request.args object contains a `paper_url` parameter
     """
-    print(arxiv_id)
+    print(request.args)
     paper_url = request.args.get('paper_url')
+    print(paper_url)
+
+    # TODO: Break the text extraction and summarization into separate function, with support for caching,
+    # and specializations for specific URL types (arxiv-vanity is the only one that works rn, slowly add
+    # support for more).
+
     # Check if URL is a valid arxiv page or not
     if "arxiv-vanity" in paper_url:
         # If it's an Arxiv URL, get the arxiv_id
-        arxiv_id = paper_url.split('arxiv_vanity.com/papers/')[1][:-1]
-        print(arxiv_id)
-    else:
-        # If not, then return a default object
-        return jsonify({"summary": "summary", "abstract": "abstract"})
+        arxiv_id = paper_url.split('arxiv-vanity.com/papers/')[1].strip('/')
 
-    # TODO: Check if the URL is a valid arxiv id. If not, return nothing.
+    else:
+        # If not, then return a default object. TODO: Make this an error that's handled upstream.
+        return jsonify({"summary": "summary", "abstract": "abstract"})
 
     # Reconstruct the Arxiv URL from the ID.
     download_url = f"https://arxiv.org/pdf/{arxiv_id}.pdf"
@@ -90,20 +86,17 @@ def main_paper_info(arxiv_id):
             text = page.extract_text()
             f.writelines(text)
 
-
     # Extract the abstract from the PDF text
     abstract = get_arxiv_abstract(txt_file_path)
 
     # Use GPT-3 to summarize the PDF
-
     openai.api_key = "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"
     response = openai.Completion.create(
         model="text-davinci-002", 
         prompt="Explain '" + abstract + "' like I am five years old.", 
-        temperature=1, 
+        temperature=1,
         max_tokens=10
     )
-    print(response)
     summary = response['choices'][0]['text']
     print("Abstract: ", abstract)
 
