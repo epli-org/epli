@@ -1,1 +1,1 @@
-web: sh -c 'cd server && python3 flask run'
+web: gunicorn server.app:app
