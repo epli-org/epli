@@ -1,1 +1,1 @@
-web: sh -c 'cd server && python3 flask run --host=0.0.0.0 --port=80'
+web: sh -c 'cd server && python3 flask run'

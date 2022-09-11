@@ -108,3 +108,7 @@ def main_paper_info():
         "abstract": abstract,
     }
     return jsonify(test_response)
+
+
+if __name__ == '__main__':
+    app.run()
