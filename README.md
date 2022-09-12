@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 # EPLI - Explain Paper Like I'm (5) / Sciren
-=======
-# EPLI - Explain Paper Like I'm (5)
 
 ## Frontend
 Beautifies scientific papers, starting with arxiv-vanity urls.
@@ -16,5 +13,3 @@ Key endpoints:
 - Return an abstract, introduction, etc. + a summary for each of these sections and the entire paper
 - Return profile / bio info for a given author + email
 - Recommend next papers for a given paper
-
->>>>>>> a3640e0956465870f39ba3ed0f22dc7d79a8081d
