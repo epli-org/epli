@@ -7,17 +7,23 @@ import openai
 
 app = Flask(__name__)
 
+MAX_PAPERS_TO_PRINT = 10
 @app.route("/")
 def get_papers_cached():
     papers = []
-    for index, paper_tag in enumerate(os.listdir("server/papers")):
+    count = 0
+    for paper_tag in os.listdir("server/papers"):
+        if paper_tag.endswith('txt'):
+            continue
         print(paper_tag)
         papers.append(paper_tag)
-        if index >= 10:
+        count += 1
+        if count >= MAX_PAPERS_TO_PRINT:
             break
-    paper_string = ', \n'.join(papers)
+        
+    paper_string = ', <br>'.join(papers)
     
-    return f"<p>Hello, World! Papers in our 'database': {paper_string}.</p>"
+    return f"<p>Hello, World! Papers in our 'database':<br><br> {paper_string}.</p>"
 
 
 def download_file(download_url, download_folder, download_filename):
