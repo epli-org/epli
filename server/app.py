@@ -39,7 +39,7 @@ def get_arxiv_abstract(txt_file_path):
     return abstract
 
 def get_explanation_prompt(abstract):
-    return f"Explain '{abstract}' like I am five years old."
+    return f"Explain '{abstract}' like I am a fifth grader, in 3 sentences or less."
 
 @app.route("/main_paper_information")
 def main_paper_info():
