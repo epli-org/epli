@@ -1,5 +1,6 @@
 const SERVER_URL = 'https://epli.herokuapp.com';
 
+// Listener that fires whenever we change to a
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   console.log(tabId, changeInfo, tab);
   if (changeInfo.status === 'complete' && tab.url.includes('https://www.arxiv-vanity.com')) {

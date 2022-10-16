@@ -20,6 +20,12 @@ Key endpoints:
 
 
 ## Notes
+
+### Features to add
+- Add context menu, which will let people add new words to jargon list (potentially?)
+- 
+
+
 ### Resources for us
 - https://explainjargon.com/ 
 - 
