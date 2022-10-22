@@ -1,6 +1,7 @@
 const SERVER_URL = 'https://epli.herokuapp.com';
+// const SERVER_URL = 'http://127.0.0.1:8000'
 
-// Listener that fires whenever we change to a
+// Listener that fires whenever we change to a new tab
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   console.log(tabId, changeInfo, tab);
   if (changeInfo.status === 'complete' && tab.url.includes('https://www.arxiv-vanity.com')) {
@@ -16,17 +17,28 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 });
 
 
+// Listen for the foreground script wanting to send requests to the backend server
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'getSummary') {
-    console.log('Getting summary...', message.url)
-    // sendResponse({ 'summary': 'This is a very simple summary of a paper abstract. Here is a second sentence to elaborate a bit more on the summary.' })
-    fetch(`${SERVER_URL}/main_paper_information`, { paper_url: message.url })
-      .then((response) => response.json())
+    fetch_response = fetch(`${SERVER_URL}/main_paper_information`, {
+      method: "POST",
+      body: JSON.stringify({
+        paper_url: message.url
+      })
+    })
+      .then((response) => {
+        console.log("Insideo of successful response I think?");        
+        return response.json()
+      })
       .then((data) => {
         console.log('Got summary', data)
+        console.log(data);
         sendResponse(data);
       })
-      .catch((e) => console.error(`ERROR: ${e}`))
+      .catch((e) => {
+        console.error(`ERROR: ${e}`);
+      })
+    return true;
   }
 });
 

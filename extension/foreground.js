@@ -1,4 +1,3 @@
-
 const summaryId = 'epli-paper-summary';
 const loadingId = 'epli-loading';
 let timeoutId;
@@ -7,6 +6,7 @@ const mutationObserver = new MutationObserver(function(mutations_list) {
   mutations_list.forEach(function(mutation) {
 		mutation.addedNodes.forEach(function(node) {
       console.log('DOM CHANGE');
+      // className that the pop-up belongs to
       if (node.className === 'tippy-popper') {
         console.log('POPUP SHOWS UP', node.innerHTML);
         const url = getUrl(node.innerHTML);
@@ -14,7 +14,7 @@ const mutationObserver = new MutationObserver(function(mutations_list) {
           const summaryEl = document.createElement("div");
           summaryEl.id = summaryId;
           summaryEl.innerText = 'Summary';
-          startLoading(summaryEl);
+          // startLoading(summaryEl);
 
           chrome.runtime.sendMessage(
             chrome.runtime.id,
@@ -23,7 +23,6 @@ const mutationObserver = new MutationObserver(function(mutations_list) {
               console.log('SUMMARY', data);
 
               // Create summary element to append to popup
-              clearLoading();
               const summaryContentEl = document.createElement("div");
               summaryContentEl.innerText = data.summary;
               summaryEl.appendChild(summaryContentEl);

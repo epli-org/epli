@@ -1,11 +1,13 @@
 from flask import Flask, request, jsonify
 from urllib import request as urllib_request
 from PyPDF2 import PdfReader
-import os
+from flask_cors import CORS
+import os, json
 import openai
 
 
 app = Flask(__name__)
+CORS(app)
 
 MAX_PAPERS_TO_PRINT = 10
 @app.route("/")
@@ -59,7 +61,8 @@ def llm_paper_summary(arxiv_id, abstract):
     """Returns the LLM-Generated summary of the paper, either fresh or cached
     """
     # Set the API key
-    openai.api_key = "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"
+    # openai.api_key = "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"
+    openai.api_key = "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"
     summary_filename = f"{arxiv_id}.txt"
     summary_directory = "server/summaries"
     if not os.path.exists(summary_directory):
@@ -89,7 +92,7 @@ def llm_paper_summary(arxiv_id, abstract):
         return summary
 
 
-@app.route("/main_paper_information")
+@app.route("/main_paper_information", methods=["POST"])
 def main_paper_info():
     """Returns a json object with the following format:
     {
@@ -101,8 +104,15 @@ def main_paper_info():
     Assumes that the request.args object contains a `paper_url` parameter
     """
     print(request.args)
-    paper_url = request.args.get('paper_url')
+    print(vars(request))
+    print(request.data)
+    decoded_request_data = request.data.decode('utf-8')
+    request_data = json.loads(decoded_request_data)
+    print(request_data)
+    paper_url = request_data['paper_url']
     print(paper_url)
+    # paper_url = request.args.get('paper_url')
+    # print(paper_url)
 
     # TODO: Break the text extraction and summarization into separate function, with support for caching,
     # and specializations for specific URL types (arxiv-vanity is the only one that works rn, slowly add
@@ -158,7 +168,9 @@ def main_paper_info():
         "summary": summary,
         "abstract": abstract,
     }
-    return jsonify(test_response)
+    jsonified_object = jsonify(test_response)
+    print(jsonified_object)
+    return jsonified_object
 
 
 if __name__ == '__main__':
