@@ -62,7 +62,6 @@ def llm_paper_summary(arxiv_id, abstract):
     """
     # Set the API key
     openai.api_key = os.environ['OPENAI_API_KEY']
-    openai.api_key = "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"
     summary_filename = f"{arxiv_id}.txt"
     summary_directory = "server/summaries"
     if not os.path.exists(summary_directory):
