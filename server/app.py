@@ -61,8 +61,8 @@ def llm_paper_summary(arxiv_id, abstract):
     """Returns the LLM-Generated summary of the paper, either fresh or cached
     """
     # Set the API key
-    # openai.api_key = "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"
-    openai.api_key = "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"
+    openai.api_key = os.environ['OPENAI_API_KEY']
+    openai.api_key = "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"
     summary_filename = f"{arxiv_id}.txt"
     summary_directory = "server/summaries"
     if not os.path.exists(summary_directory):

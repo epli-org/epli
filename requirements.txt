@@ -21,3 +21,4 @@ pandas-stubs==1.2.0.61
 pipx==1.1.0
 prompt-toolkit==3.0.29
 PyPDF2==2.10.2
+python-dotenv==0.21.0
