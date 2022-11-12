@@ -1,6 +1,6 @@
 # EPLI - Explain Paper Like I'm (5) / Sciren
 
-TL;DR: Chrome extension that improves the UX of reading a paper, using language models to generate summaries and definitions + wikipedia-style popups for easy access.
+TL;DR: **Chrome extension that improves the UX of reading a paper, using language models to generate summaries and definitions + wikipedia-style popups for easy access.**
 
  <!-- that makes papers easier to understand by surfacing relevant information to you as you read a paper, instead of forcing you to open many separate tabs. Uses Language Models to summarize relevant content for you, and provides relevant context. -->
 
@@ -21,7 +21,7 @@ In the long term, we plan on enabling a commenting system on top of papers, so t
 ## Demo
 
 Quick demo of the extension can be found here: https://www.loom.com/share/808cb0f99691438eb661db56984f0c27
-
+<!-- 
 ## Frontend
 Beautifies scientific papers, starting with arxiv-vanity urls.
 - Displays the abstracts + summaries of references
@@ -48,4 +48,4 @@ Key endpoints:
 
 ### Resources for us
 - https://explainjargon.com/ 
-- 
+-  -->
